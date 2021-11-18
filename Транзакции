@@ -1,0 +1,86 @@
+DELIMITER //
+create procedure Tr1(procent float)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set Stipendiya = (Stipendiya * procent)/100;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+
+
+DELIMITER //
+create procedure Tr2(N float)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set PREMiYA = PREMiYA + N where Kod_spec = 3322;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+call Tr2(200);
+
+
+DELIMITER //
+create procedure Tr3(N int, X int)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set Kod_uz = N where Kod_uz = X;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+call Tr3(1111,2222);
+
+DELIMITER //
+create procedure Tr4(kol_1 int, kol_2 int, premiya float)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set PREMiYA = PREMiYA + premiya where Kod_uz = kol_1;
+update student set PREMiYA = PREMiYA - premiya where Kod_uz = kol_2;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+call Tr4(1111,3333,500);
+
+
+DELIMITER //
+create procedure Tr5(dr_month int)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set PREMiYA = PREMiYA + 1000 where month(D_R) = dr_month;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+call Tr5(7);
+
+DELIMITER //
+create procedure Tr6(dr_year int)
+begin 
+set autocommit = 0;
+select * from student;
+start transaction;
+update student set PREMiYA = Stipendiya * 0.4 where year(D_R) = dr_year;
+commit;
+select * from student;
+end //
+DELIMITER ;
+
+call Tr6(2000);
